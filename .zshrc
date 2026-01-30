@@ -16,7 +16,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 
 # -----------------
-# Ctrl + Pfeil
+# Ctrl + Arrow keys
 # left/right
 # -----------------
 bindkey '^[[1;5C' forward-word   # Ctrl + rechts
