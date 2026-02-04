@@ -1,0 +1,154 @@
+#      ______    _              
+#     |___  /   | |             
+#        / / ___| |__  _ __ ___ 
+#       / / / __| '_ \| '__/ __|
+#    _./ /__\__ \ | | | | | (__ 
+#   (_)_____/___/_| |_|_|  \___|
+
+
+fastfetch
+
+
+#╔══════════════════════════════════════╗
+#║            POWERLEVEL10K             ║
+#╚══════════════════════════════════════╝
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+# Created by newuser for 5.9
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+#╔══════════════════════════════════════╗
+#║             KEYBINDINGS              ║
+#╚══════════════════════════════════════╝
+# Ctrl + Pfeiltasten
+bindkey '^[[1;5C' forward-word   # Ctrl + right
+bindkey '^[[1;5D' backward-word  # Ctrl + left
+
+
+#╔══════════════════════════════════════╗
+#║            ENVIRONMENT               ║
+#╚══════════════════════════════════════╝
+export EDITOR='vim'
+
+
+#╔══════════════════════════════════════╗
+#║              SUPERFILE               ║
+#╚══════════════════════════════════════╝
+spf() {
+    os=$(uname -s)
+
+    # Linux
+    if [[ "$os" == "Linux" ]]; then
+        export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
+    fi
+
+    command spf "$@"
+
+    [ ! -f "$SPF_LAST_DIR" ] || {
+        . "$SPF_LAST_DIR"
+        rm -f -- "$SPF_LAST_DIR" > /dev/null
+    }
+}
+
+
+#╔══════════════════════════════════════╗
+#║       COMMAND NOT FOUND HANDLER      ║
+#╚══════════════════════════════════════╝
+function command_not_found_handler {
+    local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
+    printf 'zsh: command not found: %s\n' "$1"
+    local entries=( ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"} )
+    if (( ${#entries[@]} )) ; then
+        printf "${bright}$1${reset} may be found in the following packages:\n"
+        local pkg
+        for entry in "${entries[@]}" ; do
+            local fields=( ${(0)entry} )
+            if [[ "$pkg" != "${fields[2]}" ]]; then
+                printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
+            fi
+            printf '    /%s\n' "${fields[4]}"
+            pkg="${fields[2]}"
+        done
+    fi
+    return 127
+}
+
+
+#╔══════════════════════════════════════╗
+#║          AUR HELPER DETECTION        ║
+#╚══════════════════════════════════════╝
+if pacman -Qi yay &>/dev/null; then
+   aurhelper="yay"
+elif pacman -Qi paru &>/dev/null; then
+   aurhelper="paru"
+fi
+
+
+#╔══════════════════════════════════════╗
+#║        PACKAGE INSTALL FUNCTION      ║
+#╚══════════════════════════════════════╝
+# use: in [package name]
+function in {
+    local -a inPkg=("$@")
+    local -a arch=()
+    local -a aur=()
+
+    for pkg in "${inPkg[@]}"; do
+        if pacman -Si "${pkg}" &>/dev/null; then
+            arch+=("${pkg}")
+        else
+            aur+=("${pkg}")
+        fi
+    done
+
+    if [[ ${#arch[@]} -gt 0 ]]; then
+        sudo pacman -S "${arch[@]}"
+    fi
+
+    if [[ ${#aur[@]} -gt 0 ]]; then
+        ${aurhelper} -S "${aur[@]}"
+    fi
+}
+
+
+#╔══════════════════════════════════════╗
+#║               ALIASES                ║
+#╚══════════════════════════════════════╝
+
+alias c='clear'
+alias ff='fastfetch'
+alias clock='tty-clock -sD'
+alias top='btop'
+alias tree='cbonsai -il'
+alias matrix='cmatrix'
+alias night='gammastep -O 2000'
+alias lock='hyprlock'
+alias wetter='curl wttr.in/nameOfYourLocation'
+alias code='codium'
+
+
+#╔══════════════════════════════════════╗
+#║             EZA (LS)                 ║
+#╚══════════════════════════════════════╝
+alias l='eza -lha --icons=auto' # long list
+alias ls='eza -1a --icons=auto' # short list
+alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
+alias ld='eza -lhDa --icons=auto' # long list dirs
+alias lt='eza --icons=auto --tree' # list folder as tree
+
+
+#╔══════════════════════════════════════╗
+#║       DIRECTORY NAVIGATION           ║
+#╚══════════════════════════════════════╝
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
