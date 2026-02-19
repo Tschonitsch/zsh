@@ -6,7 +6,6 @@
 #   (_)_____/___/_| |_|_|  \___|
 
 
-fastfetch
 
 
 #╔══════════════════════════════════════╗
@@ -152,3 +151,29 @@ alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
+
+
+#╔══════════════════════════════════════╗
+#║          ZSH AUTOSUGGESTIONS         ║
+#╚══════════════════════════════════════╝
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+# savefile location
+HISTFILE=~/.zsh_history
+# max number of entrys
+HISTSIZE=10000
+SAVEHIST=10000
+# Anhängen statt überschreiben
+setopt APPEND_HISTORY
+# Sofortige Synchronisierung zwischen Terminals
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+# Lösche keine leeren Eingaben aus der History
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+
+
+#╔══════════════════════════════════════╗
+#║         ZSH SYNTAX HIGHLIGHT         ║
+#╚══════════════════════════════════════╝
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
