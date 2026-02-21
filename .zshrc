@@ -121,13 +121,26 @@ function in {
 #║               ALIASES                ║
 #╚══════════════════════════════════════╝
 
+alias fan1='echo level 1 | sudo tee /proc/acpi/ibm/fan'
+alias fan2='echo level 2 | sudo tee /proc/acpi/ibm/fan'
+alias fan3='echo level 3 | sudo tee /proc/acpi/ibm/fan'
+alias fan4='echo level 4 | sudo tee /proc/acpi/ibm/fan'
+alias fan5='echo level 5 | sudo tee /proc/acpi/ibm/fan'
+alias fan6='echo level 6 | sudo tee /proc/acpi/ibm/fan'
+alias fan7='echo level 7 | sudo tee /proc/acpi/ibm/fan'
+alias fanauto='echo level auto | sudo tee /proc/acpi/ibm/fan'
+alias fanmax='echo level full-speed | sudo tee /proc/acpi/ibm/fan'
+
 alias c='clear'
+#alias ani='cd ~/Videos/Anime && ani-cli --dub --rofi --download'
+alias ani='cd ~/Videos/Anime && ani-cli --dub --rofi'
 alias ff='fastfetch'
 alias clock='tty-clock -sD'
 alias top='btop'
 alias tree='cbonsai -il'
 alias matrix='cmatrix'
-alias night='gammastep -O 2000'
+alias on='bash -c "echo 1 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brightness; echo 1 | sudo tee /sys/class/leds/tpacpi::power/brightness"'
+alias off='bash -c "echo 0 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brightness; echo 0 | sudo tee /sys/class/leds/tpacpi::power/brightness; brightnessctl set 1"'
 alias lock='hyprlock'
 alias wetter='curl wttr.in/nameOfYourLocation'
 alias code='codium'
