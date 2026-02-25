@@ -121,6 +121,9 @@ function in {
 #║               ALIASES                ║
 #╚══════════════════════════════════════╝
 
+alias fan='sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi'
+alias fanspeed='cat /proc/acpi/ibm/fan'
+
 alias fan1='echo level 1 | sudo tee /proc/acpi/ibm/fan'
 alias fan2='echo level 2 | sudo tee /proc/acpi/ibm/fan'
 alias fan3='echo level 3 | sudo tee /proc/acpi/ibm/fan'
@@ -130,6 +133,12 @@ alias fan6='echo level 6 | sudo tee /proc/acpi/ibm/fan'
 alias fan7='echo level 7 | sudo tee /proc/acpi/ibm/fan'
 alias fanauto='echo level auto | sudo tee /proc/acpi/ibm/fan'
 alias fanmax='echo level full-speed | sudo tee /proc/acpi/ibm/fan'
+
+alias aur='~/aur-install.sh'
+alias pac='~/install.sh'
+alias pacrm='~/remove.sh'
+alias wifi='impala'
+
 
 alias c='clear'
 #alias ani='cd ~/Videos/Anime && ani-cli --dub --rofi --download'
@@ -144,6 +153,7 @@ alias off='bash -c "echo 0 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brig
 alias lock='hyprlock'
 alias wetter='curl wttr.in/nameOfYourLocation'
 alias code='codium'
+alias open='opencode'
 
 
 #╔══════════════════════════════════════╗
