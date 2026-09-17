@@ -1,13 +1,13 @@
-#      ______    _              
-#     |___  /   | |             
-#        / / ___| |__  _ __ ___ 
+#      ______    _
+#     |___  /   | |
+#        / / ___| |__  _ __ ___
 #       / / / __| '_ \| '__/ __|
-#    _./ /__\__ \ | | | | | (__ 
+#    _./ /__\__ \ | | | | | (__
 #   (_)_____/___/_| |_|_|  \___|
 
-
-
+# ---------- ZSH Modules ----------
 typeset -a zsh_modules=(
+    p10k
     env
     cnfh
     superfile
@@ -17,9 +17,11 @@ typeset -a zsh_modules=(
     installer
     plugins
     completion
-    p10k
 )
+# ---------- ZSH Modules ----------
 
+# ---------- Module Loading ----------
 for module in "${zsh_modules[@]}"; do
-    source "$HOME/.config/zsh/${module}.zsh"
+    source "$HOME/.config/zsh/${module}.zsh"  # Load each ZSH module
 done
+# ---------- Module Loading ----------
